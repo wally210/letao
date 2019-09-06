@@ -58,20 +58,38 @@
                 <li><a href="index.html">管理系统</a></li>
                 <li class="active">用户管理</li>
             </ol>
-            <!-- echarts数据图形表 -->
-            <div id="lt-content">
-                <div class="echarts-1 pull-left"></div>
-                <div class="echarts-2 pull-right"></div>
+        </div>
+    </div>
+
+    <!-- role  aria- 都是给盲人设备识别的, 可以直接删掉 -->
+    <!-- 添加了 data-dismiss="modal" 可以用于关闭模态框 -->
+    <!-- 给模态框添加 modal-lg 大型,  modal-sm 小型, 不加 中等 -->
+    <!-- 最外层蒙层 -->
+    <div class="modal fade" tabindex="-1" id="logout-modal">
+        <!-- 模态框结构 -->
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h4 class="modal-title">温馨提示</h4>
+            </div>
+            <div class="modal-body">
+                <p class="red"><i class="glyphicon glyphicon-info-sign"></i> 您确定要退出后台管理系统吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="btn-logout">退出</button>
+            </div>
             </div>
         </div>
     </div>
+
+
 
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="lib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
     <script src="lib/nprogress/nprogress.js"></script>
     <script src="js/common.js"></script>
-    <script src="lib/echarts/echarts.min.js"></script>
-    <script src="js/index.js"></script>
 </body>
 </html>

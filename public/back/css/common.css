@@ -77,7 +77,7 @@ ul{
 .lt-aside .nav{
     padding-top: 30px;
 }
-.lt-aside .nav ul li a{
+.lt-aside .nav a{
     display: block;
     width: 100%;
     height: 40px;
@@ -86,7 +86,7 @@ ul{
     color: #fff;
     border-left: 3px solid transparent;
 }
-.lt-aside .nav ul li a.current{
+.lt-aside .nav a.current{
     background-color: #1D1F21;
     border-left: 3px solid #006699;
 }
@@ -123,4 +123,10 @@ ul{
 }
 .modal .red{
     color: red;
+}
+
+/* echarts图表 */
+.echarts-1, .echarts-2{
+    width: 48%;
+    height: 400px;
 }

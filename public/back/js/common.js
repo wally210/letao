@@ -54,6 +54,7 @@ if(location.href.indexOf("login.html") === -1){
 $(function(){
     // 1.分类管理切换功能
     $(".nav .category").on("click", function(){
+        console.log(111)
         // 切换child的显示隐藏
         $(".nav .child").stop().slideToggle();
     });
