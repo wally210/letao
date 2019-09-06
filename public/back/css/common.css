@@ -125,8 +125,15 @@ ul{
     color: red;
 }
 
-/* echarts图表 */
+/* index页面 echarts图表容器宽高 */
 .echarts-1, .echarts-2{
     width: 48%;
     height: 400px;
+}
+/* user页面，table的对齐 */
+.table.table-bordered th,
+.table.table-bordered td
+{
+    vertical-align: middle;
+    text-align: center;
 }
