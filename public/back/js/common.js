@@ -38,7 +38,7 @@ if(location.href.indexOf("login.html") === -1){
         type: "get",
         dataType: "json",
         success: function(info){
-            console.log(info);
+            // console.log(info);
             if(info.success){
                 // 已登陆，继续访问
             }
@@ -78,7 +78,7 @@ $(function(){
             url: "/employee/employeeLogout",
             dataType: "json",
             success: function(info){
-                console.log(info);//{success: true}
+                // console.log(info);//{success: true}
                 if(info.success){
                     // 退出成功，跳转到登陆页面
                     location.href = "login.html";

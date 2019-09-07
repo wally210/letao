@@ -27,7 +27,7 @@
         <div class="nav">
             <ul>
                 <li class="">
-                    <a href="index.html"><i class="glyphicon glyphicon-user"></i><span>用户管理</span></a>
+                    <a href="user.html"><i class="glyphicon glyphicon-user"></i><span>用户管理</span></a>
                 </li>
                 <li>
                     <a class="category" href="javascript:;"><i class="glyphicon glyphicon-th-list"></i><span>分类管理</span></a>
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <!-- 右侧主体部分 -->
+    <!-- 右侧主体公共部分 -->
     <div class="lt-main">
         <!-- 头部 -->
         <div class="topbar">
@@ -51,6 +51,7 @@
             <a class="pull-right icon-logout" href="#"><i class="glyphicon glyphicon-log-out"></i></a>
         </div>
 
+        <!-- 主体内容 -->
         <!-- 流式布局容器  container-fluid  默认左右 padding 15px; -->
         <div class="container-fluid">
             <!-- 路径导航 -->
@@ -59,9 +60,23 @@
                 <li><a href="first.html">分类管理</a></li>
                 <li class="active">一级分类</li>
             </ol>
+
+            <button class="btn btn-default">添加分类</button>
+
+            <table class="table table-bordered table-hover mt-20">
+                <thead>
+                    <th style="width:20%;">序号</th>
+                    <th style="width:80%;">一级分类名</th>
+                </thead>
+                <tbody>
+                    <!-- 一级分类渲染模板 -->
+                </tbody>
+            </table>
         </div>
     </div>
 
+
+    <!-- 模态框 -->
     <!-- role  aria- 都是给盲人设备识别的, 可以直接删掉 -->
     <!-- 添加了 data-dismiss="modal" 可以用于关闭模态框 -->
     <!-- 给模态框添加 modal-lg 大型,  modal-sm 小型, 不加 中等 -->
@@ -85,12 +100,22 @@
         </div>
     </div>
 
+    <script type="text/html" id="firstTpl">
+        {{each rows v i}}
+            <tr>
+                <td>{{ i + 1 + (page - 1) * size }}</td>
+                <td>{{ v.categoryName }}</td>
+            </tr>
+        {{/each}}
+    </script>
 
 
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="lib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
     <script src="lib/nprogress/nprogress.js"></script>
+    <script src="lib/template/template-web.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/first.js"></script>
 </body>
 </html>
