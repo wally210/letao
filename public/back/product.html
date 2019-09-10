@@ -60,7 +60,7 @@
             </ol>
             
             <div class="lt-content">
-                <button class="btn btn-default" id="addBtn">添加分类</button>
+                <button class="btn btn-default" id="addProduct">添加分类</button>
     
                 <table class="table table-bordered table-hover mt-20">			
                     <thead>
@@ -106,21 +106,21 @@
         </div>
     </div>
 
-    <!-- 添加分类按钮模态框 -->
+    <!-- 添加商品按钮模态框 -->
     <div class="modal fade" tabindex="-1" id="product-modal">
         <!-- 模态框结构 -->
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <form id="form">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                        <h4 class="modal-title">添加分类</h4>
+                        <h4 class="modal-title">添加商品</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <span id="dropdownText">请选择一级分类</span>     
+                                    <span id="dropdownText">请选择二级分类</span>     
                                     <!-- 向下三角形 -->
                                     <span class="caret"></span>
                                 </button>
@@ -130,25 +130,47 @@
                             </div>
 
                             <!-- 隐藏域存储数据 -->
-                            <!-- 一级分类id -->
-                            <input type="hidden" name="categoryId">
-                            <!-- 火热品牌hot = 1 -->
-                            <input type="hidden" name="hot" value="1">
+                            <!-- 二级级分类id -->
+                            <input type="hidden" name="brandId">
 
                         </div>
+                        <!-- 商品名称 -->
                         <div class="form-group">
-                            <input type="text" name="brandName" class="form-control" placeholder="请输入二级分类">
+                            <input type="text" name="brandName" class="form-control" placeholder="请输入商品名称">
                         </div>
+                        <!-- 商品描述 -->
+                        <div class="form-group">
+                            <textarea name="proDesc" class="form-control" cols="30" rows="5" placeholder="请输入商品描述"></textarea>
+                        </div>
+                        <!-- 商品库存 -->
+                        <div class="form-group">
+                            <input type="text" name="num" class="form-control" placeholder="请输入商品库存">
+                        </div>
+                        <!-- 商品尺码 -->
+                        <div class="form-group">
+                            <input type="text" name="size" class="form-control" placeholder="请输入商品尺码">
+                        </div>
+                        <!-- 商品原价 -->
+                        <div class="form-group">
+                            <input type="text" name="oldPrice" class="form-control" placeholder="请输入商品原价">
+                        </div>
+                        <!-- 商品现价 -->
+                        <div class="form-group">
+                            <input type="text" name="price" class="form-control" placeholder="请输入商品现价">
+                        </div>
+
+                        <!-- 上传图片 -->
                         <div class="form-group">
                             <label for="fileupload" class="btn btn-default">上传图片</label>
                             <!-- 准备结构, 需要通过插件帮我们发送文件上传请求, 需要配置 name 和 data-url 接口地址
                                 name     后台用于接收图片
                                 data-url 后台接口地址
+                                multiple 多文件上传配置
                             -->
-                            <input type="file" id="fileupload" name="pic1" data-url="/category/addSecondCategoryPic" style="display: none">
+                            <input type="file" multiple id="fileupload" name="pic1" data-url="/category/addSecondCategoryPic" style="display: none">
                         </div>
                         <div class="form-group" id="imgBox">
-                            <img  src="./images/none.png" width="100px" alt="">
+                            
                             <!-- 隐藏域 接收图片地址 -->
                             <input type="hidden" name="brandLogo">
                         </div>
@@ -182,7 +204,12 @@
         {{ /each }}
     </script>
 
-
+    <!-- 下拉列表（二级分类） -->
+    <script type="text/html" id="secondTpl">
+        {{ each rows v i}}
+            <li><a data-id="{{ v.id }}" href="#">{{ v.brandName }}</a></li>
+        {{ /each }}
+    </script>
 
 
     <script src="lib/jquery/jquery.min.js"></script>

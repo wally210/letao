@@ -12,9 +12,11 @@ $(function(){
                 page: currentPage,
                 pageSize: pageSize
             },
+            // 后台如果在响应头中, 设置了响应头 Content-Type: application/json;
+            // 前端可以省略  dataType: "json"
             dataType: "json",
             success: function(info){
-                console.log(info);
+                // console.log(info);
                 var htmlStr = template("productTpl", info);
                 $(".lt-content tbody").html(htmlStr);
                 // 分页bootstrapPagination
@@ -71,4 +73,68 @@ $(function(){
             }
         })
     }
+
+    // 2.点击添加商品，弹出模态框，同时发送ajax查询二级分类
+    $("#addProduct").on("click", function(){
+        // 显示模态框
+        $("#product-modal").modal("show");
+
+        // ajax查询二级分类
+        $.ajax({
+            url: "/category/querySecondCategoryPaging",
+            type: "get",
+            data: {
+                page: 1,
+                pageSize: 100
+            },
+            dataType: "json",
+            success: function(info){
+                console.log(info);
+                var htmlStr = template("secondTpl", info);
+                $(".dropdown-menu").html(htmlStr);
+            }
+        })
+    });
+
+    // 3.给dropdown-menu下面的 a 注册点击事件(通过事件委托)
+    $(".dropdown-menu").on("click", "a", function(){
+        // a标签的文本值,赋值给dropdownText标签
+        var txt = $(this).text();
+        $("#dropdownText").text(txt);
+
+        // a标签的id 赋值给隐藏域
+        var id = $(this).data("id");
+        $("[name='brandId']").val(id);
+
+    });
+
+    // 定义变量，用来存储多文件上传的图片
+    var picAddr = [];
+    // 4.多文件上传
+    //   多文件上传时, 插件会遍历选中的图片, 发送多次请求到服务器, 将来响应多次
+    //   每次响应都会调用一次 done 方法
+    $("#fileupload").fileupload({
+        dataType: "json",
+        //e：事件对象
+        //data：图片上传后的对象，通过data.result.picAddr可以获取上传后的图片地址
+        done: function(e, data){
+            // 往数组前面添加
+            picAddr.unshift(data.result);
+            console.log(picAddr);
+            // 往imgBox最前面添加图片
+            $("#imgBox").prepend("<img src='"+ data.result.picAddr +"' width='100px' height='100px' alt=''>");
+
+            // 只显示3张图片(删除数组最后面的图片)
+            if(picAddr.length > 3 ){
+                // 数组.pop()从后面删除
+                picAddr.pop();
+                // 删除最后面的图片标签img
+                // $("#imgBox img").eq(-1).remove();
+                $("#imgBox img:last-of-type").remove();
+            }
+        }
+
+    });
+
+
 });
