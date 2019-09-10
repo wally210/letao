@@ -76,6 +76,13 @@ $(function(){
 
     // 2.点击添加商品，弹出模态框，同时发送ajax查询二级分类
     $("#addProduct").on("click", function(){
+        // 清空表单数据
+        $("#form").data("bootstrapValidator").resetForm(true);
+
+        // 品牌id,图片不是表单元素，手动清除
+        $("#dropdownText").text("请选择二级分类");
+        $("#imgBox img").remove();
+
         // 显示模态框
         $("#product-modal").modal("show");
 
@@ -231,7 +238,44 @@ $(function(){
         }
     });
 
+    // 6.点击添加按钮，通过ajax提交表单
+    $("#form").on("success.form.bv", function(e){
+        // 阻止表单事件
+        e.preventDefault();
+        console.log($("#form").serialize());
 
+        // 获取表单元素数据
+        var paramsStr = $("#form").serialize();
+
+        // 拼接图片的数据
+        paramsStr += "&picName1="+ picAddr[0].picName +"&picAddr="+ picAddr[0].picAddr +" ";
+        paramsStr += "&picName1="+ picAddr[1].picName +"&picAddr="+ picAddr[1].picAddr +" ";
+        paramsStr += "&picName1="+ picAddr[2].picName +"&picAddr="+ picAddr[2].picAddr +" ";
+
+        $.ajax({
+            url: "/product/addProduct",
+            type: "post",
+            data: paramsStr,
+            dataType: "json",
+            success: function(info){
+                console.log(info);
+                if(info.success){
+                    // 关闭模态框
+                    $("#product-modal").modal("hide");
+                    // 重新加载第一页
+                    currentPage = 1;
+                    render();
+                    // 清空表单数据
+                    $("#form").data("bootstrapValidator").resetForm(true);
+
+                    // 品牌id,图片不是表单元素，手动清除
+                    $("#dropdownText").text("请选择二级分类");
+                    $("#imgBox img").remove();
+
+                }
+            }
+        });
+    });
 
 
 });
