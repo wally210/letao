@@ -106,6 +106,9 @@ $(function(){
         var id = $(this).data("id");
         $("[name='brandId']").val(id);
 
+        // 当选择品牌后改变校验结果
+        $("#form").data("bootstrapValidator").updateStatus("brandId","VALID");
+
     });
 
     // 定义变量，用来存储多文件上传的图片
@@ -120,7 +123,6 @@ $(function(){
         done: function(e, data){
             // 往数组前面添加
             picAddr.unshift(data.result);
-            console.log(picAddr);
             // 往imgBox最前面添加图片
             $("#imgBox").prepend("<img src='"+ data.result.picAddr +"' width='100px' height='100px' alt=''>");
 
@@ -132,9 +134,104 @@ $(function(){
                 // $("#imgBox img").eq(-1).remove();
                 $("#imgBox img:last-of-type").remove();
             }
+            // 如果处理后, 图片数组的长度为 3, 那么就通过校验, 手动将picStatus置成VALID
+            if(picAddr.length === 3){
+                $("#form").data("bootstrapValidator").updateStatus("picStatus","VALID");
+            }
         }
-
     });
+
+    // 5.表单校验
+    $("#form").bootstrapValidator({
+
+        // 默认插件不对隐藏域进行校验, 现在需要对隐藏域进行校验
+        // 重置排除项
+        excluded: [],
+
+        // 配置校验图标
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',    // 校验成功
+            invalid: 'glyphicon glyphicon-remove',  // 校验失败
+            validating: 'glyphicon glyphicon-refresh' // 校验中
+        },
+        // 字段列表
+        fields: {
+            brandId: {
+                // 校验规则
+                validators: {
+                    // 非空
+                    notEmpty: {
+                        message: "请选择二级分类"
+                    }
+                }
+            },
+            proName: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入商品名称"
+                    }
+                }
+            },
+            proDesc: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入商品描述"
+                    }
+                }
+            },
+            num: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入商品库存"
+                    },
+                    //正则校验
+                    // \d 表示数字 0-9
+                    // + 表示出现一次或多次
+                    // * 表示出现0次或多次
+                    // ? 表示出现0次或1次
+                    regexp: {
+                        regexp: /^[1-9]\d*$/,
+                        message: '商品库存必须是非零开头的数字'
+                    }
+                }
+            },
+            // 尺码, 还要求必须是 xx-xx 的格式, x为数字
+            size: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入商品尺码"
+                    },
+                    regexp: {
+                        regexp: /^\d{2}-\d{2}$/,
+                        message: '尺码必须是 xx-xx 的格式, 例如: 32-40'
+                      }
+                }
+            },
+            oldPrice: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入商品原价"
+                    }
+                }
+            },
+            price: {
+                validators: {
+                    notEmpty: {
+                        message: "请输入商品现价"
+                    }
+                }
+            },
+            picStatus: {
+                validators: {
+                    notEmpty: {
+                        message: "请上传3张图片"
+                    }
+                }
+            }
+        }
+    });
+
+
 
 
 });

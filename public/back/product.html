@@ -60,7 +60,7 @@
             </ol>
             
             <div class="lt-content">
-                <button class="btn btn-default" id="addProduct">添加分类</button>
+                <button class="btn btn-default" id="addProduct">添加商品</button>
     
                 <table class="table table-bordered table-hover mt-20">			
                     <thead>
@@ -133,10 +133,13 @@
                             <!-- 二级级分类id -->
                             <input type="hidden" name="brandId">
 
+                            <!-- statu默认上架 值：1 -->
+                            <input type="hidden" name="statu">
+
                         </div>
                         <!-- 商品名称 -->
                         <div class="form-group">
-                            <input type="text" name="brandName" class="form-control" placeholder="请输入商品名称">
+                            <input type="text" name="proName" class="form-control" placeholder="请输入商品名称">
                         </div>
                         <!-- 商品描述 -->
                         <div class="form-group">
@@ -172,7 +175,7 @@
                         <div class="form-group" id="imgBox">
                             
                             <!-- 隐藏域 接收图片地址 -->
-                            <input type="hidden" name="brandLogo">
+                            <input type="hidden" name="picStatus">
                         </div>
                         
                     </div>
