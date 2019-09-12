@@ -36,10 +36,14 @@
 .lt-category-right li a {
     display: block;
     width: 100%;
+    padding-top: 10px;
 }
 .lt-category-right li a img{
     display: block;
     width: 70px;
     height: 50px;
     margin: 0 auto;
+}
+.tips{
+    padding: 10px;
 }

@@ -28,21 +28,7 @@
                     <div class="mui-scroll">
                         <!--这里放置真实显示的DOM内容-->
                         <ul>
-                            <li>
-                                <a href="" class="current">运动馆</a>
-                            </li>
-                            <li>
-                                <a href="">运动馆</a>
-                            </li>
-                            <li>
-                                <a href="">运动馆</a>
-                            </li>
-                            <li>
-                                <a href="">运动馆</a>
-                            </li>
-                            <li>
-                                <a href="">运动馆</a>
-                            </li>
+                           <!-- 一级分类模板 -->
                         </ul>
                     </div>
                 </div>
@@ -54,36 +40,7 @@
                     <div class="mui-scroll">
                         <!--这里放置真实显示的DOM内容-->
                         <ul>
-                            <li>
-                                <a href="">
-                                    <img src="./images/brand1.png" alt="">
-                                    <p>耐克</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="./images/brand1.png" alt="">
-                                    <p>耐克</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="./images/brand1.png" alt="">
-                                    <p>耐克</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="./images/brand1.png" alt="">
-                                    <p>耐克</p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <img src="./images/brand1.png" alt="">
-                                    <p>耐克</p>
-                                </a>
-                            </li>
+                            <!-- 二级分类模板 -->
                         </ul>
                     </div>
                 </div>
@@ -120,8 +77,35 @@
         </div>
     </div>
 
+    <!-- 一级分类模板 -->
+    <script type="text/html" id="categoryTpl">
+        {{ each rows v i }}
+            <li>
+                <a href="#" data-id="{{ v.id }}" class="{{ i === 0 ? 'current' : ''}}">{{ v.categoryName }}</a>
+            </li>
+        {{ /each }}
+    </script>
+
+    <!-- 二级分类模板 -->
+    <script type="text/html" id="secondTpl">
+        {{ if rows.length === 0}}
+            <p class="tips">没有更多分类</p>
+        {{ else }}
+            {{ each rows v i}}
+                <li>
+                    <a href="#">
+                        <img src="{{ v.brandLogo }}" alt="">
+                        <p>{{ v.brandName }}</p>
+                    </a>
+                </li>
+            {{ /each }}
+        {{ /if }}
+    </script>
+
     <script src="./lib/mui/js/mui.js"></script>
     <script src="./lib/zepto/zepto.min.js"></script>
+    <script src="./lib/template/template-web.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/category.js"></script>
 </body>
 </html>
