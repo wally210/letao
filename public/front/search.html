@@ -35,6 +35,10 @@
                         <input type="text" placeholder="请输入搜索关键字">
                         <button class="mui-btn mui-btn-primary btn-search">搜索</button>
                     </div>
+
+                    <div class="lt-history">
+                        <!-- 历史记录模板 -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,10 +74,32 @@
         </div>
     </div>
 
+    <script type="text/html" id="historyTpl">
+        {{ if arr.length === 0}}
+            <p>没有更多数据了</p>
+        {{ else }}
+            <div class="title mui-clearfix">
+                <span class="mui-pull-left">搜索历史</span>
+                <span class="mui-pull-right btn-empty"><i class="fa fa-trash"></i>清空记录</span>
+            </div>
+            <div class="content">
+                <ul>
+                    {{ each arr v i }}
+                        <li>
+                            <a href="#" class="mui-pull-left">{{ v }}</a>
+                            <i data-index="{{ i }}" class="mui-icon mui-icon-closeempty mui-pull-right btn-del"></i>
+                        </li>
+                    {{ /each }}
+                </ul>
+            </div>
+        {{ /if }}
+    </script>
+
 
     <script src="./lib/mui/js/mui.js"></script>
     <script src="./lib/zepto/zepto.min.js"></script>
     <script src="./lib/template/template-web.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/search.js"></script>
 </body>
 </html>

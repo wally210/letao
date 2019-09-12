@@ -8,10 +8,33 @@
     font-size: 14px;
     border: 1px solid #007AFF;
     border-radius: 5px;
+    padding-right: 90px;/*防止字体写到搜索框*/
 }
 .lt-search .btn-search{
     position: absolute;
     top: 10px;
     right: 10px;
     border-radius: 0 5px 5px 0;
+}
+
+.lt-history {
+    padding: 10px;
+    font-size: 14px;
+    color: #666;
+}
+.lt-history .content{
+    border: 1px dashed red;
+    border-bottom: none;
+}
+.content li{
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px dashed red;
+}
+.content li a{
+    padding: 0 10px;
+}
+.content li i{
+    height: 30px;
+    line-height: 30px;
 }
