@@ -35,8 +35,12 @@ $(function(){
     // 清空历史记录，removeItem()
     // 页面重新渲染
     $(".lt-history").on("click", ".btn-empty", function(){
-        localStorage.removeItem("search_list");
-        render();
+        mui.confirm("确认要全部清空记录？", "温馨提醒",["取消","确认"],function(e){
+            if(e.index === 1){
+                localStorage.removeItem("search_list");
+                render();
+            }
+        })
     });
 
     // 功能3：删除单条历史记录
@@ -47,16 +51,54 @@ $(function(){
     // 将修改后的数组转换成jsonStr,再存储到localStorage
     // 页面重新加载
     $(".lt-history").on("click", ".btn-del", function(){
-        var index = $(this).data("index");
-        var jsonStr = localStorage.getItem("search_list");
-        var arr = JSON.parse(jsonStr); //json字符串转换成数组
-        // 删除对应index坐标的数据
-        // splice( 从哪开始，删除几项，添加的项1，添加的项2，...);
-        arr.splice(index, 1);
-        // 转换成json字符串再存储
-        localStorage.setItem("search_list",JSON.stringify(arr));
-        // 重新渲染页面
-        render();
+
+        var that = $(this);
+
+        // confirm确认框
+        mui.confirm("你确定删除该条记录吗?", "温馨提示", ["取消", "确定"], function(e){
+            console.log(e);
+            if(e.index === 1){
+                var index = that.data("index");
+                var jsonStr = localStorage.getItem("search_list");
+                var arr = JSON.parse(jsonStr); //json字符串转换成数组
+                // 删除对应index坐标的数据
+                // splice( 从哪开始，删除几项，添加的项1，添加的项2，...);
+                arr.splice(index, 1);
+                // 转换成json字符串再存储
+                localStorage.setItem("search_list",JSON.stringify(arr));
+                // 重新渲染页面
+                render();
+            }
+        })
+    });
+
+    // 功能4：点击搜索按键，搜索相关商品信息
+    $(".btn-search").on("click", function(){
+        var key = $(".lt-search input").val().trim();
+
+        // 获取本地搜索记录
+        var arr = getHistory();
+        // 如果有重复值，先删除原来的再把新的在最前面保存
+        var index = arr.indexOf(key);
+        if(index > -1){
+            // console.log(index);
+            arr.splice(index, 1);
+        }
+        if(arr.length >= 10){
+            arr.pop();
+        }
+
+        // 在数组前面添加搜索值
+        arr.unshift(key);
+
+        // 数组转成json字符串，保存
+        localStorage.setItem("search_list", JSON.stringify(arr));
+        // 清空搜索框内容
+        $(".lt-search input").val("");
+
+        // 搜索完成, 跳转到搜索列表, 并将搜索关键字传递过去
+        location.href = "searchList.html?key=" + key;
+        
     });
 
 

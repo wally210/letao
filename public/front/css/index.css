@@ -14,35 +14,3 @@
     display: block;
     width: 100%;
 }
-/* 商品列表 */
-.lt-product{
-    margin-top: 10px;
-    padding: 10px;
-}
-.lt-product li {
-    float: left;
-    width: 48%;
-    text-align: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-.lt-product li:nth-child(odd){
-    margin-right: 4%;
-}
-.lt-product li a{
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-.lt-product li a img{
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-}
-.lt-product li .price{
-    color: red;
-}
-.lt-product li .oldPrice{
-    text-decoration: line-through;
-}

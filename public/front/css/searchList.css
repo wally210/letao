@@ -1,0 +1,40 @@
+.nav-search{
+    height: 30px;
+    line-height: 30px;
+    background-color: #eee;
+}
+.nav-search li{
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+.nav-search li a{
+    display: block;
+    width: 100%;
+    color: #333;
+    font-size: 14px;
+}
+.nav-search li a.current{
+    color: orange;
+}
+
+.loading{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid powderblue;
+    left: 50%;
+    top: 150px;
+    transform: translateX(-50%);
+    /* 动画效果 */
+    animation: rotate 1s infinite linear;
+}
+@keyframes rotate{
+    from {
+        /* 为了保持在x水平剧中位置加上translateX(-50%) */
+        transform: translateX(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateX(-50%) rotate(360deg);
+    }
+}

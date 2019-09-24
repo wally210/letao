@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>乐淘搜索</title>
+    <title>乐淘搜索结果</title>
     <link rel="stylesheet" href="./lib/mui/css/mui.min.css">
     <link rel="stylesheet" href="./lib/fa/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/search.css">
+    <link rel="stylesheet" href="./css/searchList.css">
 </head>
 <body>
     <!-- 全屏容器 -->
@@ -32,13 +32,33 @@
 
                     <!-- 搜索模块 -->
                     <div class="lt-search">
-                        <input type="text" placeholder="请输入搜索关键字">
+                        <input type="text" class="searchInp" placeholder="请输入搜索关键字">
                         <button class="mui-btn mui-btn-primary btn-search">搜索</button>
                     </div>
 
-                    <div class="lt-history">
-                        <!-- 历史记录模板 -->
+                    <div class="nav-search">
+                        <ul>
+                            <li>
+                                <a href="#">上架时间<i class="fa fa-angle-down"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" data-type="price">价格<i class="fa fa-angle-down"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" data-type="num">库存<i class="fa fa-angle-down"></i></a>
+                            </li>
+                            <li>
+                                <a href="#">折扣<i class="fa fa-angle-down"></i></a>
+                            </li>
+                        </ul>
                     </div>
+                    
+                    <div class="lt-product">
+                        <!-- 图片列表模板 -->
+                        <!-- 在渲染之前使用loading -->
+                        <div class="loading"></div>
+                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -74,32 +94,29 @@
         </div>
     </div>
 
-    <script type="text/html" id="historyTpl">
-        {{ if arr.length === 0}}
-            <p>没有更多数据了</p>
-        {{ else }}
-            <div class="title mui-clearfix">
-                <span class="mui-pull-left">搜索历史</span>
-                <span class="mui-pull-right btn-empty"><i class="fa fa-trash"></i>清空记录</span>
-            </div>
-            <div class="content">
-                <ul>
-                    {{ each arr v i }}
-                        <li>
-                            <a href="searchList.html?key={{ v }}" class="mui-pull-left">{{ v }}</a>
-                            <i data-index="{{ i }}" class="mui-icon mui-icon-closeempty mui-pull-right btn-del"></i>
-                        </li>
-                    {{ /each }}
-                </ul>
-            </div>
-        {{ /if }}
+    <!-- 图片列表模板 -->
+    <script type="text/html" id="slTpl">
+        <ul>
+            {{ each data v i }}
+                    <li>
+                        <a href="#">
+                            <img src="./images/product.jpg" alt="">
+                            <p>{{ v.proName }}</p>
+                            <p>
+                                <span class="price">¥{{ v.price }}</span>
+                                <span class="oldPrice">¥{{ v.oldPrice }}</span>
+                            </p>
+                            <button class="mui-btn mui-btn-primary">立即购买</button>
+                        </a>
+                    </li>
+            {{ /each }}
+        </ul>
     </script>
-
 
     <script src="./lib/mui/js/mui.js"></script>
     <script src="./lib/zepto/zepto.min.js"></script>
     <script src="./lib/template/template-web.js"></script>
     <script src="./js/common.js"></script>
-    <script src="./js/search.js"></script>
+    <script src="./js/searchList2.js"></script>
 </body>
 </html>
