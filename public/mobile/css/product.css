@@ -1,35 +1,35 @@
+
+/* 公共的padding和上边框 */
 .item_box {
   padding: 10px;
   border-top: 1px solid #ccc;
 }
 
-.lt_price .price{
+.lt_price .price {
   color: red;
 }
 .lt_price .oldPrice {
-  color: #666;
   text-decoration: line-through;
   font-size: 12px;
+  color: #666;
 }
 
 
-
-
-
-.lt_num span {
+.lt_num .last {
   font-size: 12px;
   color: #666;
 }
+
 
 .lt_go_cart {
   position: absolute;
   left: 0;
   bottom: 0;
   height: 55px;
+  padding: 10px;
+  background-color: #EFEFF4;
   width: 100%;
   border-top: 1px solid red;
-  background-color: #EFEFF4;
-  padding: 10px;
 }
 .lt_go_cart a {
   padding: 5px;

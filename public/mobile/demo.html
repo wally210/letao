@@ -5,25 +5,22 @@
   <title>Title</title>
   <style>
     .father {
-      width: 200px;
-      height: 200px;
-      background-color: blue;
+      width: 400px;
+      height: 400px;
+      border: 1px solid #000;
       position: relative;
     }
+    /* 1. 如果设置宽度, 同时设置 left 和 right, 听 left 的
+       2. 如果没有设置宽度, 通过设置 left 和 right, 会拉伸这个盒子
+    */
     .son {
-      position: absolute;
       background-color: pink;
+      position: absolute;
       left: 0;
       right: 0;
       top: 0;
       bottom: 0;
     }
-    /*
-      如果当前元素设置了宽高, 同时设置 left和right, 听 left 的
-                            同时设置 top 和 bottom, 听 top 的
-
-      如果当前元素没有设置宽高, 又同时设置了 left 和 right, 会将盒子拉伸
-    */
   </style>
 </head>
 <body>

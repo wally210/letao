@@ -410,19 +410,19 @@ a:active
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-
 .mui-ellipsis-3
 {
-    display: -webkit-box;
-    overflow: hidden;
+  display: -webkit-box;
+  overflow: hidden;
 
-    white-space: normal !important;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
+  white-space: normal !important;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
+
 
 .mui-table
 {
@@ -493,11 +493,13 @@ a:active
     padding-left: 5px;
 }
 
-/* before 防塌陷, after 清浮动 */
+/* 双伪元素法清浮动
+   before的作用: 防塌陷
+   after的作用: 清浮动
+*/
 .mui-clearfix:before, .mui-clearfix:after
 {
     display: table;
-
     content: ' ';
 }
 .mui-clearfix:after
@@ -751,7 +753,8 @@ p
 
     width: 100%;
 
-    /* 使用了 transform 的 3d 属性, 可以开启 gpu 硬件加速 */
+    /* transform 如果设置 3d 属性, 会开启 gpu 硬件加速,
+       可以让手机以最高的性能进行渲染该元素 */
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
 }

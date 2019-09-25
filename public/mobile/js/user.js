@@ -1,10 +1,13 @@
 /**
- * Created by Jepson on 2018/8/13.
+ * Created by Jepson on 2018/8/23.
  */
+
 
 $(function() {
 
-  // 1. 一进入页面, 发送请求, 渲染用户信息
+  // 1. 一进入页面, 请求当前用户数据, 进行页面渲染
+  //   (1) 用户已登录, 后台返回用户数据, 通过模板渲染
+  //   (2) 用户没登录, 后台返回error, 当前用户未登录, 拦截到登录页
   $.ajax({
     type: "get",
     url: "/user/queryUserMessage",
@@ -12,27 +15,21 @@ $(function() {
     success: function( info ) {
       console.log( info );
       if ( info.error === 400 ) {
-        // 未登录
+        // 用户未登录
         location.href = "login.html";
         return;
       }
 
-      // 已登录, 通过模板引擎渲染
-      var htmlStr = template("tpl", info);
+      // 用户已登录, 会返回用户数据, 进行渲染
+      var htmlStr = template( "userTpl", info );
       $('#userInfo').html( htmlStr );
     }
   })
 
 
-  // 退出的两种方案
-  // 1. 用户端清空浏览器缓存 (就是将cookie中的sessionId清除)
-  // 2. 调用后台提供的退出接口, 让后台销毁当前用户 session存储空间, 清空用户信息
-
-
-
-  // 2. 点击退出按钮, 实现用户退出功能
-  $('#logout').click(function() {
-    // 发送 ajax
+  // 2. 退出功能
+  $('.logoutBtn').click(function() {
+    // 发送请求, 进行退出操作即可
     $.ajax({
       type: "get",
       url: "/user/logout",
@@ -46,7 +43,6 @@ $(function() {
       }
     })
   })
-
 
 
 })

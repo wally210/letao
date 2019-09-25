@@ -1,112 +1,119 @@
 /**
- * Created by Jepson on 2018/8/12.
+ * Created by Jepson on 2018/8/22.
  */
+
 $(function() {
 
-
-  // 功能1: 解析地址栏参数, 将参数赋值到input框中
-  var key = getSearch( "key" );
+  // 功能1: 获取地址栏传递过来的搜索关键字, 设置给 input
+  var key = getSearch("key");
+  // 设置给 input
   $('.search_input').val( key );
+  // 一进入页面, 渲染一次
   render();
 
 
-  // 获取 input框的值, 请求数据, 进行渲染
+  // 根据搜索关键字, 发送请求, 进行页面渲染
   function render() {
+    // 准备请求数据, 渲染时, 显示加载中的效果
     $('.lt_product').html('<div class="loading"></div>');
 
-
-    // 三个必传的参数
     var params = {};
-    params.proName = $('.search_input').val();  // 搜索关键字
+    // 三个必传的参数
+    params.proName = $('.search_input').val();
     params.page = 1;
     params.pageSize = 100;
 
-    // 两个可选的参数
-    // 通过判断有没有高亮的a标签, 来决定需不需要传递排序的参数
+    // 两个可传可不传的参数,
+    // (1) 需要根据高亮的 a 来判断传哪个参数,
+    // (2) 通过箭头判断, 升序还是降序
+    // 价格: price    1升序，2降序
+    // 库存: num      1升序，2降序
+
     var $current = $('.lt_sort a.current');
     if ( $current.length > 0 ) {
-      // 当前有 a 标签有current类, 需要进行排序
-      console.log( "需要进行排序" );
-      // 按照什么进行排序
+      // 有高亮的 a, 说明需要进行排序
+      // 获取传给后台的键
       var sortName = $current.data("type");
-      // 升序还是降序, 可以通过判断箭头的方向决定, （1升序，2降序）
+      // 获取传给后台的值, 通过箭头方向判断
       var sortValue = $current.find("i").hasClass("fa-angle-down") ? 2 : 1;
 
-      // 如果需要排序, 需要将参数添加在params中
+      // 添加到 params 中
       params[ sortName ] = sortValue;
     }
 
-
     setTimeout(function() {
-      // 发送 ajax 请求, 获取搜索到的商品, 通过模板引擎渲染
       $.ajax({
         type: "get",
         url: "/product/queryProduct",
         data: params,
         dataType: "json",
         success: function( info ) {
-          console.log( info )
-          var htmlStr = template( "tpl" , info );
+          console.log( info );
+          var htmlStr = template("productTpl", info);
           $('.lt_product').html( htmlStr );
         }
-      })
-    }, 1000);
+      });
+    }, 500);
   }
-
 
 
   // 功能2: 点击搜索按钮, 实现搜索功能
   $('.search_btn').click(function() {
-    // 获取搜索框的值
-    var key = $(".search_input").val();
 
-    // 获取数组
-    var jsonStr = localStorage.getItem("search_list");
-    var arr = JSON.parse( jsonStr );
-
-    // 1. 不能重复
-    var index = arr.indexOf( key );
-    if ( index > -1 ) {
-      // 已经存在, 删除该项
-      arr.splice( index, 1 );
+    // 需要将搜索关键字, 追加存储到本地存储中
+    var key = $('.search_input').val();
+    if ( key.trim() === "" ) {
+      mui.toast("请输入搜索关键字");
+      return;
     }
-    // 2. 不能超过10个
+    render();
+
+    // 获取数组, 需要将 jsonStr => arr
+    var history = localStorage.getItem("search_list") || '[]';
+    var arr = JSON.parse( history );
+
+    // 1. 删除重复的项
+    var index = arr.indexOf( key );
+    if ( index != -1 ) {
+      // 删除重复的项
+      arr.splice(index, 1);
+    }
+    // 2. 长度限制在 10
     if ( arr.length >= 10 ) {
+      // 删除最后一项
       arr.pop();
     }
 
-    // 将搜索关键字添加到 arr 最前面
+    // 将关键字追加到 arr 最前面
     arr.unshift( key );
-
-    // 转存到本地存储中
-    localStorage.setItem( "search_list", JSON.stringify( arr ) );
-
-    render();
+    // 转成 json, 存到本地存储中
+    localStorage.setItem("search_list", JSON.stringify( arr ) );
   });
 
 
 
-  // 功能3: 点击价格或者库存, 切换current, 实现排序
-  // 1. 绑定点击事件, 通过 a[data-type] 绑定
-  // 2. 切换 current类
-  //    (1)点击的a标签没有current类, 直接加上 current类, 并且移除其他 a 的current类
-  //    (2)点击的a标签有current类, 切换箭头方向
-  // 3. 调用 render 重新渲染
+  // 功能3: 排序功能
+  // 通过属性选择器给价格和库存添加点击事件
+  // (1) 如果自己有 current 类, 切换箭头的方向即可
+  // (2) 如果自己没有 current 类, 给自己加上 current 类, 并且移除兄弟元素的 current
 
   $('.lt_sort a[data-type]').click(function() {
 
-    if ( $(this).hasClass("current") ) {
-      // 有类, 切换箭头方向
-      $(this).find("i").toggleClass("fa-angle-down").toggleClass("fa-angle-up");
+    if ( $(this).hasClass("current") ){
+      // 有 current 类, 切换箭头即可
+      $(this).find("i").toggleClass("fa-angle-up").toggleClass("fa-angle-down");
     }
     else {
-      // 当前a没有类, 给自己加上, 让其他的移除
-      $(this).addClass("current").siblings().removeClass("current");
+      // 没有 current 类, 自己加上 current 类, 移除兄弟元素的 current
+      $(this).addClass( "current" ).siblings().removeClass("current");
     }
 
-    // 重新渲染
+    // 页面重新渲染即可, 因为所有的参数都在render中实时获取处理好了
+    // 要重新渲染, 只需要调用 render
     render();
-  })
+
+  });
+
 
 
 

@@ -1,40 +1,40 @@
 /**
- * Created by Jepson on 2018/8/10.
+ * Created by Jepson on 2018/8/22.
  */
-
 $(function() {
 
-  // 1. 一进入页面, 发送请求, 获取左侧一级分类数据进行渲染
+  // 1. 一进入页面发送 ajax 请求, 获取一级分类数据, 进行渲染
   $.ajax({
     type: "get",
     url: "/category/queryTopCategory",
     dataType: "json",
     success: function( info ) {
       console.log( info );
-      var htmlStr = template( "leftTpl", info );
+      var htmlStr = template("leftTpl", info);
       $('.lt_category_left ul').html( htmlStr );
 
-      // 一进入页面, 渲染第一个一级分类, 对应的二级分类数据
+      // 一进入页面, 渲染第一个一级分类所对应的二级分类
       renderSecondById( info.rows[0].id );
     }
   });
 
 
-  // 2. 通过事件委托, 给所有的左侧 a 绑定点击事件, 点击 a 切换显示二级分类
-  $('.lt_category_left').on("click", "a", function() {
-    // 给自己添加 current, 让其他所有的 a 移除 current
-    $(this).addClass("current").parent().siblings().find("a").removeClass("current");
 
-    // 获取 id, 根据 id, 渲染二级分类
+  // 2. 点击一级分类, 渲染二级分类
+  $('.lt_category_left').on("click", "a", function() {
+    // 给自己加上 current, 移除其他的 current
+    $(this).addClass("current").parent().siblings().find("a").removeClass("current");
+    // 获取 id, 通过 id 进行二级分类渲染
     var id = $(this).data("id");
-    renderSecondById(id);
+    renderSecondById( id );
   });
 
 
-  // 通过 一级分类的 id, 进行右侧二级分类的重新渲染
+
+  // 实现一个方法: 专门用于根据一级分类 id 去渲染 二级分类
   function renderSecondById( id ) {
 
-    // 发送ajax请求
+    // 发送 ajax 请求
     $.ajax({
       type: "get",
       url: "/category/querySecondCategory",
@@ -43,11 +43,12 @@ $(function() {
       },
       dataType: "json",
       success: function( info ) {
-        console.log( info )
+        console.log( info );
         var htmlStr = template("rightTpl", info);
         $('.lt_category_right ul').html( htmlStr );
       }
     })
+
   }
 
 });

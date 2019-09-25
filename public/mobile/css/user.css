@@ -1,7 +1,8 @@
-#logout {
+.logoutBtn {
   padding: 5px 0;
+  margin: 0;
 }
 
-.btn-wrapper {
+.btnWrapper {
   padding: 10px;
 }

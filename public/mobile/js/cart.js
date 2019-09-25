@@ -1,42 +1,48 @@
 /**
- * Created by Jepson on 2018/8/13.
+ * Created by Jepson on 2018/8/23.
  */
+
 $(function() {
 
-
-  // 1. 进入页面, 发送ajax请求, 获取购物车列表, 进行渲染
   function render() {
+    // 1. 一进入页面, 发送 ajax 请求, 获取购物车数据
+    //   (1) 用户未登录, 后台返回 error 拦截到登录页
+    //   (2) 用户已登录, 后台返回 购物车数据, 进行页面渲染
     setTimeout(function() {
       $.ajax({
         type: "get",
         url: "/cart/queryCart",
         dataType: "json",
         success: function( info ) {
-          console.log( info );
+          console.log( info )
           if ( info.error === 400 ) {
-            // 用户没登陆, 跳转到登录页, 在跳转时, 将页面地址拼接
-            location.href = "login.html?retUrl=" + location.href;
+            // 未登录
+            location.href = "login.html";
             return;
           }
 
-          // 用户已登录, 通过模板引擎渲染  (需要的是对象, 要将数组包装)
-          var htmlStr = template( "cartTpl" , { arr: info } );
+          // 已登录, 可以拿到数据, 通过模板渲染
+          // 注意: 拿到的是数组, template方法参数2要求是一个对象, 需要包装
+          var htmlStr = template("cartTpl", { arr: info } );
           $('.lt_main .mui-table-view').html( htmlStr );
 
-          // 关闭下拉刷新
+          // 渲染完成, 需要关闭下拉刷新
           mui(".mui-scroll-wrapper").pullRefresh().endPulldownToRefresh();
         }
       });
     }, 500);
   }
 
+
+  // 2. 配置下拉刷新
   mui.init({
     pullRefresh : {
-      container:".mui-scroll-wrapper",//下拉刷新容器标识
+      container:".mui-scroll-wrapper", // 下拉刷新容器标识
       down : {
-        auto: true, // 加载自动下拉刷新一次
+        auto: true, // 一进入页面就下拉刷新一次
         callback: function() {
-          console.log( "发送ajax请求, 进行页面刷新" );
+          console.log( "下拉刷新了" );
+          // 发送 ajax 请求, 获取数据, 进行渲染
           render();
         }
       }
@@ -44,60 +50,58 @@ $(function() {
   });
 
 
-  // 2. 删除功能
-  //    (1) 点击事件绑定要通过事件委托绑定, 且要绑定 tap 事件
-  //    (2) 获取当前购物车 id
-  //    (3) 发送 ajax 请求进行删除
-  //    (4) 页面重新渲染
-  $('.lt_main').on("tap", ".btn_delete", function() {
-    // 获取 id
-    var id = $(this).data("id");
 
-    // 发送 ajax 请求
+  // 3. 删除功能
+  // (1) 给删除按钮注册事件, 事件委托, 通过 tap进行注册点击
+  // (2) 获取在按钮中存储的 id
+  // (3) 发送 ajax 请求, 执行删除操作
+  // (4) 页面重新渲染
+  $('.lt_main').on("tap", ".btn_del", function() {
+    var id = $(this).data("id");
+    // 发送请求
     $.ajax({
       type: "get",
       url: "/cart/deleteCart",
-      // 注意: 后台要求传递的数组, 虽然这里只删一个, 但是格式还是数组
+      // 后台要求传的 id 参数是一个数组格式
       data: {
         id: [ id ]
       },
-      dataType: "json",
+      dataType:"json",
       success: function( info ) {
         console.log( info );
         if ( info.success ) {
-          // 页面重新渲染, 触发一次下拉刷新即可
+          // 删除成功
+          // 调用一次下拉刷新
           mui(".mui-scroll-wrapper").pullRefresh().pulldownLoading();
         }
       }
     })
-
   });
 
 
-  // 3. 编辑功能
-  //    点击编辑按钮, 显示确认框
-  $('.lt_main').on("tap", ".btn_edit", function() {
 
-    // 自定义属性 dataset, dom对象的属性
+  // 4. 编辑功能
+  $('.lt_main').on("tap", ".btn_edit", function() {
+    // html5 里面有一个 dataset 可以一次性获取所有的 自定义属性
     var obj = this.dataset;
-    // 从自定义属性中获取 id
     var id = obj.id;
 
-    console.log( obj )
-
+    // 生成 htmlStr
     var htmlStr = template( "editTpl", obj );
-    // 换行 \n, mui 会将所有 \n 解析成 br 标签进行换行
-    // 我们需要在传递给 确认框前, 将所有的 \n 去掉
+
+    // mui 将模板中的 \n 换行标记, 解析成 <br> 标签, 就换行了
+    // 需要将模板中所有的 \n 去掉
     htmlStr = htmlStr.replace( /\n/g, "" );
 
-    // 显示确认框
-    mui.confirm( htmlStr, "编辑商品", ["确认", "取消"], function( e ) {
+    // 弹出确认框
+    // 确认框的内容, 支持传递 html 模板
+    mui.confirm( htmlStr , "编辑商品", [ "确认", "取消" ], function( e ) {
 
       if ( e.index === 0 ) {
-        // 确认编辑
-        // 获取尺码和数量, 进行提交
-        var size = $('.lt_size span.current').text();
-        var num = $('.mui-numbox-input').val();
+        // 你点击是的确认按钮,
+        // 进行获取尺码, 数量, id, 进行 ajax 提交
+        var size = $('.lt_size span.current').text();  // 尺码
+        var num = $('.mui-numbox-input').val(); // 数量
 
         $.ajax({
           type: "post",
@@ -111,25 +115,27 @@ $(function() {
           success: function( info ) {
             console.log( info );
             if ( info.success ) {
-              // 编辑成功, 页面重新, 下拉刷新一次即可
+              // 下拉刷新一次即可
               mui(".mui-scroll-wrapper").pullRefresh().pulldownLoading();
             }
           }
         })
 
-
       }
+
+
     });
 
-    // 手动初始化数字框
+
+    // 进行数字框初始化
     mui(".mui-numbox").numbox();
 
-  })
-
-
-  // 给编辑模态框的尺码添加选中功能
-  $('body').on("click", ".lt_size span", function() {
-    $(this).addClass("current").siblings().removeClass("current");
   });
 
-});
+
+
+  // 5. 让尺码可以被选
+  $('body').on("click", ".lt_size span", function() {
+    $(this).addClass("current").siblings().removeClass("current");
+  })
+})
