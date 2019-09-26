@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>商品详情</title>
+    <title>乐淘商城</title>
     <link rel="stylesheet" href="./lib/mui/css/mui.min.css">
     <link rel="stylesheet" href="./lib/fa/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/common.css">
@@ -15,9 +15,15 @@
     <div class="lt-container">
         <!-- 头部 -->
         <div class="lt-header">
-            <a href="index.html" class="icon-left"><i class="mui-icon mui-icon-home"></i></a>
-            <h3>购物车</h3>
-            <a href="search.html" class="icon-right"><i class="fa fa-search"></i></a>
+            <!-- 
+                返回上一页 
+                    history.back();
+                    history.go(-1);
+            -->
+            <a href="javascript:history.back();" class="icon-left"><i class="mui-icon mui-icon-back"></i></a>
+            <h3>商品详情</h3>
+            <!-- 页面刷新：location.reload() -->
+            <a href="javascript:location.reload();" class="icon-right"><i class="mui-icon mui-icon-reload"></i></a>
         </div>
         <!-- 主体 -->
         <div class="lt-main">
@@ -25,16 +31,86 @@
             <div class="mui-scroll-wrapper">
                 <div class="mui-scroll">
                     <!--这里放置真实显示的DOM内容-->
-                   
+                     <!-- 图片轮播 -->
+                     <div class="mui-slider">
+                        <div class="mui-slider-group mui-slider-loop">
+                            <!--支持循环，需要重复图片节点-->
+                            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="./images/banner5.png" /></a></div>
+                            <div class="mui-slider-item"><a href="#"><img src="./images/banner1.png" /></a></div>
+                            <div class="mui-slider-item"><a href="#"><img src="./images/banner2.png" /></a></div>
+                            <div class="mui-slider-item"><a href="#"><img src="./images/banner3.png" /></a></div>
+                            <div class="mui-slider-item"><a href="#"><img src="./images/banner4.png" /></a></div>
+                            <div class="mui-slider-item"><a href="#"><img src="./images/banner5.png" /></a></div>
+                            <!--支持循环，需要重复图片节点-->
+                            <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="./images/banner1.png" /></a></div>
+                        </div>
+                        <!-- 小圆点 -->
+                        <div class="mui-slider-indicator">
+                            <div class="mui-indicator mui-active"></div>
+                            <div class="mui-indicator"></div>
+                            <div class="mui-indicator"></div>
+                            <div class="mui-indicator"></div>
+                            <div class="mui-indicator"></div>
+                        </div>
+                    </div>
+                    <!-- 标题 -->
+                    <div class="lt-pro-title pro-com">
+                        <strong>【莹恋】MIZUNO美津浓V1GA159002乒乓球鞋男鞋女鞋室内综合训练鞋</strong>
+                    </div>
+                    <!-- 价格 -->
+                    <div class="lt-price pro-com">
+                        <span>价格：</span>
+                        <span class="price">¥9.99</span>
+                        <span class="oldPrice">¥999</span>
+                    </div>
+                    <!-- 尺码 -->
+                    <div class="lt-size pro-com">
+                        尺码：
+                        <span class="current">40</span>
+                        <span>41</span>
+                        <span>42</span>
+                        <span>43</span>
+                        <span>44</span>
+                        <span>45</span>
+                        <span>46</span>
+                        <span>47</span>
+                        <span>48</span>
+                        <span>49</span>
+                    </div>
+                    <!-- 数量 -->
+                    <div class="lt-num pro-com">
+                        <span>数量:</span>
+                        <!-- 
+                            data-numbox-step:每次点击“+”、“-”按钮变化的步长，默认步长为1
+                            data-numbox-min:输入框允许使用的最小值，默认无限制
+                            data-numbox-max:输入框允许使用的最大值，默认无限制
+                         -->
 
-                  
-
-                  
+                        <div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='100'>
+                            <!-- "-"按钮，点击可减小当前数值 -->
+                            <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                            <input class="mui-numbox-input" type="number" />
+                            <!-- "+"按钮，点击可增大当前数值 -->
+                            <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                        </div>
+                        <span class="stock">剩余数量：22台</span>
+                    </div>
+                    <!-- 详情描述 -->
+                    <div class="lt-desc pro-com">
+                        详情: 描述123123
+                    </div>
                 </div>
             </div>
-
         </div>
-       
+        <!-- 前往购物车 -->
+        <div class="lt-go-cart pro-com">
+            <a href="#" class="pull-left">前往购物车</a>  
+            <div class="cart-right pull-right">
+                <button class="mui-btn mui-btn-danger">加入购物车</button>
+                <button class="mui-btn mui-btn-warning">买买买</button>
+            </div>
+        </div>
+
     </div>
 
     <script src="./lib/mui/js/mui.js"></script>
