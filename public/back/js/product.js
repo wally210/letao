@@ -248,9 +248,9 @@ $(function(){
         var paramsStr = $("#form").serialize();
 
         // 拼接图片的数据
-        paramsStr += "&picName1="+ picAddr[0].picName +"&picAddr="+ picAddr[0].picAddr +" ";
-        paramsStr += "&picName1="+ picAddr[1].picName +"&picAddr="+ picAddr[1].picAddr +" ";
-        paramsStr += "&picName1="+ picAddr[2].picName +"&picAddr="+ picAddr[2].picAddr +" ";
+        paramsStr += "&picName1="+ picAddr[0].picName +"&picAddr1="+ picAddr[0].picAddr;
+        paramsStr += "&picName2="+ picAddr[1].picName +"&picAddr2="+ picAddr[1].picAddr;
+        paramsStr += "&picName3="+ picAddr[2].picName +"&picAddr3="+ picAddr[2].picAddr;
 
         $.ajax({
             url: "/product/addProduct",

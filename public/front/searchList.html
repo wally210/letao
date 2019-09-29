@@ -100,7 +100,7 @@
             {{ each data v i }}
                     <li>
                         <a href="product.html?productId={{ v.id }}" data-id="{{ v.id }}">
-                            <img src="./images/product.jpg" alt="">
+                            <img src="{{ v.pic[0].picAddr }}" alt="">
                             <p>{{ v.proName }}</p>
                             <p>
                                 <span class="price">¥{{ v.price }}</span>

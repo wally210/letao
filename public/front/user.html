@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./lib/mui/css/mui.min.css">
     <link rel="stylesheet" href="./lib/fa/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/cart.css">
+    <link rel="stylesheet" href="./css/user.css">
 </head>
 <body>
     <!-- 全屏容器 -->
@@ -16,8 +16,8 @@
         <!-- 头部 -->
         <div class="lt-header">
             <a href="javascript:history.go(-1);" class="icon-left"><i class="mui-icon mui-icon-back"></i></a>
-            <h3>购物车</h3>
-            <a href="search.html" class="icon-right"><i class="fa fa-search"></i></a>
+            <h3>个人中心</h3>
+            <!-- <a href="search.html" class="icon-right"><i class="fa fa-search"></i></a> -->
         </div>
         <!-- 主体 -->
         <div class="lt-main">
@@ -25,7 +25,24 @@
             <div class="mui-scroll-wrapper">
                 <div class="mui-scroll">
                     <!--这里放置真实显示的DOM内容-->
-                    
+                    <ul class="mui-table-view">
+                        <li class="mui-table-view-cell mui-media" id="userInfo">
+                            <!-- 用户详情模板 -->
+                        </li>
+
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">账号与安全</a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">我的购物车</a>
+                        </li>
+                        <li class="mui-table-view-cell">
+                            <a class="mui-navigate-right">收货地址管理</a>
+                        </li>
+                    </ul>
+                    <div class="btnWrapper">
+                        <button class="mui-btn mui-btn-default logoutBtn">退出</button>
+                    </div>
                 </div>
             </div>
 
@@ -46,13 +63,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="cart.html" class="current">
+                    <a href="cart.html">
                         <i class="fa fa-shopping-cart"></i>
                         <p>购物车</p>
                     </a>
                 </li>
                 <li>
-                    <a href="user.html">
+                    <a href="user.html" class="current">
                         <i class="mui-icon mui-icon-contact"></i>
                         <p>用户中心</p>
                     </a>
@@ -61,9 +78,20 @@
         </div>
     </div>
 
+    <script type="text/html" id="userTpl">
+        <a href="javascript:;">
+            <img class="mui-media-object mui-pull-left" src="./images/user.jpg">
+            <div class="mui-media-body">
+                {{ username }}
+                <p class='mui-ellipsis'>绑定手机：{{ mobile }}</p>
+            </div>
+        </a>
+    </script>
+
     <script src="./lib/mui/js/mui.js"></script>
     <script src="./lib/zepto/zepto.min.js"></script>
+    <script src="./lib/template/template-web.js"></script>
     <script src="./js/common.js"></script>
-    <script src="./js/cart.js"></script>
+    <script src="./js/user.js"></script>
 </body>
 </html>

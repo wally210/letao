@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="./lib/mui/css/mui.min.css">
     <link rel="stylesheet" href="./lib/fa/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/cart.css">
+    <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
     <!-- 全屏容器 -->
     <div class="lt-container">
         <!-- 头部 -->
         <div class="lt-header">
-            <a href="javascript:history.go(-1);" class="icon-left"><i class="mui-icon mui-icon-back"></i></a>
-            <h3>购物车</h3>
+            <a href="javascript:hostory.back();" class="icon-left"><i class="mui-icon mui-icon-back"></i></a>
+            <h3>登陆</h3>
             <a href="search.html" class="icon-right"><i class="fa fa-search"></i></a>
         </div>
         <!-- 主体 -->
@@ -25,10 +25,22 @@
             <div class="mui-scroll-wrapper">
                 <div class="mui-scroll">
                     <!--这里放置真实显示的DOM内容-->
-                    
+                    <form class="mui-input-group">
+                        <div class="mui-input-row">
+                            <label>用户名</label>
+                            <input type="text" id="username" class="mui-input-clear" placeholder="请输入用户名">
+                        </div>
+                        <div class="mui-input-row">
+                            <label>密码</label>
+                            <input type="password" id="password" class="mui-input-password" placeholder="请输入密码">
+                        </div>
+                        <div class="mui-button-row">
+                            <button type="button" id="loginBtn" class="mui-btn mui-btn-primary" >登陆</button>
+                            <button type="reset" class="mui-btn mui-btn-danger" >重置</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-
         </div>
         <!-- 底部 -->
         <div class="lt-footer">
@@ -46,7 +58,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="cart.html" class="current">
+                    <a href="cart.html">
                         <i class="fa fa-shopping-cart"></i>
                         <p>购物车</p>
                     </a>
@@ -64,6 +76,6 @@
     <script src="./lib/mui/js/mui.js"></script>
     <script src="./lib/zepto/zepto.min.js"></script>
     <script src="./js/common.js"></script>
-    <script src="./js/cart.js"></script>
+    <script src="./js/login.js"></script>
 </body>
 </html>
